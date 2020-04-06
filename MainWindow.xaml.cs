@@ -12,6 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FireSharp;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+
 
 namespace CrossInstaller
 {
@@ -22,7 +27,18 @@ namespace CrossInstaller
     {
         public MainWindow()
         {
-            InitializeComponent();
+            Auth auth = new Auth();
+            IFirebaseClient client = new FirebaseClient(auth.config);
+
+            if (client != null)
+            {
+                
+            }
+        }
+
+        private void Connection_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
