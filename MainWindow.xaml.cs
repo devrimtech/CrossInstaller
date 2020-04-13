@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using FireSharp;
-using FireSharp.Config;
-using FireSharp.Interfaces;
-using FireSharp.Response;
-
+using System.Reactive.Linq;
+using System.IO;
+using System;
+using System.Net;
+using FirebaseAdmin.Auth;
+using Firebase.Database;
+using Firebase;
+using FirebaseAdmin;
+using Firebase.Auth;
+using Google.Apis.Auth.OAuth2;
+using Google.Api;
+using Google.Apis;
 
 namespace CrossInstaller
 {
@@ -28,17 +24,26 @@ namespace CrossInstaller
         public MainWindow()
         {
             Auth auth = new Auth();
-            IFirebaseClient client = new FirebaseClient(auth.config);
+            string clientUrl = auth.clientUrl;
+            string token = auth.token;
 
-            if (client != null)
+            FirebaseApp.Create(new AppOptions()
             {
-                
-            }
+                Credential = GoogleCredential.GetApplicationDefault(),
+            });
+
+            WebRequest wrGETURL;
+            wrGETURL = WebRequest.Create(auth.clientUrl+"/apps/github/download.json");
+            Stream objStream;
+            objStream = wrGETURL.GetResponse().GetResponseStream();
+            Console.WriteLine(objStream);
+
+            TextBox txtb = new TextBox();
+            txtb.Height = 500;
+            txtb.Width = 200;
+            txtb.Margin = new Thickness(0, 440, 836, 40);
         }
 
-        private void Connection_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
-        }
     }
 }
